@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elora</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">
+                <!-- <img src="placeholder.svg" alt="BrainSync Analytics Logo" height="32" width="32"> -->
+            </div>
+            <div class="nav-links">
+                <a href="#research">Research</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <button class="theme-toggle" aria-label="Toggle theme">
+                <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+                <svg class="sun-icon hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="title">
+                    <span class="gradient-text">Elora</span>
+                </h1>
+                <p class="description">
+                    Advanced EEG analysis and brain monitoring solutions. Unlocking the mysteries of neural activity through
+                    cutting-edge technology.
+                </p>
+                <div class="cta-buttons">
+                    <a href="#contact" class="primary-button">Schedule Demo</a>
+                    <a href="#research" class="secondary-button">
+                        View Research <span aria-hidden="true">→</span>
+                    </a>
+                </div>
+            </div>
+            <div class="brain-container">
+                <canvas id="brainCanvas"></canvas>
+            </div>
+        </section>
+
+        <section class="services" id="services">
+            <h2>Our Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="icon">📊</div>
+                    <h3>EEG Analysis</h3>
+                    <p>Advanced brain activity monitoring and pattern recognition using state-of-the-art equipment.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon">🧠</div>
+                    <h3>Neural Research</h3>
+                    <p>Cutting-edge research in neural networks and brain-computer interfaces.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon">💻</div>
+                    <h3>Data Processing</h3>
+                    <p>Complex neural data processing and visualization using AI-powered analytics.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon">🔬</div>
+                    <h3>Brain-Computer Interface</h3>
+                    <p>Developing advanced BCI solutions for medical and research applications.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#about">About</a>
+                <a href="#services">Services</a>
+                <a href="#contact">Contact</a>
+                <a href="#privacy">Privacy</a>
+                <a href="#terms">Terms</a>
+            </div>
+            <p class="copyright">© 2024 BrainSync Analytics. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // ✅ Theme Toggling
+    document.addEventListener("DOMContentLoaded", () => {
+        const themeToggle = document.querySelector('.theme-toggle');
+        const moonIcon = document.querySelector('.moon-icon');
+        const sunIcon = document.querySelector('.sun-icon');
+        const savedTheme = localStorage.getItem('theme') || 'light';
+
+        function setTheme(isDark) {
+            document.documentElement.classList.toggle('dark', isDark);
+            moonIcon.classList.toggle('hidden', isDark);
+            sunIcon.classList.toggle('hidden', !isDark);
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
+
+        setTheme(savedTheme === 'dark');
+
+        themeToggle.addEventListener('click', () => {
+            setTheme(!document.documentElement.classList.contains('dark'));
+        });
+    });
+
+
+
+    // ✅ Handle window resizing
+    function onWindowResize() {
+        const container = document.querySelector('.brain-container');
+        if (!renderer || !container) return;
+
+        camera.aspect = container.offsetWidth / container.offsetHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.offsetWidth, container.offsetHeight);
+    }
+    window.addEventListener('resize', onWindowResize);
+
+    // ✅ Smooth Scroll for Navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+
+    // ✅ Initialize Three.js when DOM is ready
+    document.addEventListener("DOMContentLoaded", initBrain);
+
+    </script>
+</body>
+</html>

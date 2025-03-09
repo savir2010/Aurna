@@ -1,0 +1,42 @@
+/* Container: the donut ring is formed via a conic gradient. 
+   We'll use a custom CSS variable --percent to define the fill angle. */
+   .donut-chart {
+    /* Adjust width/height as desired */
+    width: 250px;
+    height: 250px;
+  
+    /* We create a conic gradient up to our percentage, then fill the remainder with gray. 
+       The gradient is 360 degrees, so if we want 65% filled, that is 65% of 360 -> about 234 deg. */
+    background: conic-gradient(
+      /* The “filled” color portion */
+      #f15060 calc(var(--percent) * 1%), 
+      /* The “remaining” color portion */
+      #e0e0e0 0
+    );
+  
+    border-radius: 50%;
+    position: relative;
+  }
+  
+  /* The inner white circle that creates the donut effect */
+  .donut-inner {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    /* Adjust size for the donut thickness */
+    width: 200px;
+    height: 200px;
+    background-color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Percentage text in the donut center */
+  .donut-text {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+  }
+  

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EEG Stress Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #218838;
+        }
+
+        #results {
+            margin-top: 20px;
+            display: none;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>EEG Stress Prediction</h1>
+        <button onclick="fetchPrediction()">Start EEG Recording</button>
+        <div id="results">
+            <h2>Results:</h2>
+            <p><strong>Predicted Labels:</strong> <span id="labels"></span></p>
+            <p><strong>Stress Score:</strong> <span id="stressScore"></span></p>
+            <!-- <p><strong>Indices:</strong> <span id="indices"></span></p> -->
+            <!-- <p><strong>Report:</strong> <span id="report"></span></p> -->
+            <img id="generatedImage" src="" alt="Generated Image">
+        </div>
+    </div>
+
+    <script>
+        function fetchPrediction() {
+            document.getElementById("results").style.display = "none"; // Hide previous results
+
+            fetch("http://127.0.0.1:1222/record_predict", {
+                method: "POST"
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("labels").textContent = data.labels;
+                document.getElementById("stressScore").textContent = data.stress_score.toFixed(2);
+                // document.getElementById("indices").textContent = data.indices.join(", ");
+                // document.getElementById("report").textContent = data.report;
+                document.getElementById("generatedImage").src = data.image_url;
+
+                document.getElementById("results").style.display = "block"; // Show results
+            })
+            .catch(error => {
+                console.error("Error fetching prediction:", error);
+                alert("Failed to fetch EEG prediction.");
+            });
+        }
+    </script>
+</body>
+</html>
