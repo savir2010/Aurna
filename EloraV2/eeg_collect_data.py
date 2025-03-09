@@ -51,4 +51,3 @@ np.save("muse_eeg_data.npy", eeg_data)
 np.save("muse_eeg_labels.npy", labels)
 print("EEG data saved successfully!")
 
-1.200.22222
