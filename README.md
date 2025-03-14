@@ -1,3 +1,5 @@
+Authors:
+Thavas Antonio, Sevir Deliker
 # Elora Neurotechnology Project
 
 > **Empowering mental health diagnostics with EEG and AI**  
